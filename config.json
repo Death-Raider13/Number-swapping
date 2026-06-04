@@ -1,0 +1,93 @@
+{
+  "bot_name": "My Business Bot",
+  "greeting": "👋 Welcome! How can I help you today?",
+  "fallback": "❓ I didn't understand that. Type *hi* to see the main menu.",
+  "trigger_words": ["hi", "hello", "hey", "start", "menu"],
+
+  "menus": {
+    "main": {
+      "text": "Please choose an option:",
+      "options": {
+        "1": {"label": "📅 Book an appointment", "action": "flow:booking"},
+        "2": {"label": "🛍️ Shop our products",   "action": "menu:shop"},
+        "3": {"label": "📞 Contact us",           "action": "reply:contact_info"},
+        "4": {"label": "📋 View price list",      "action": "media:price_list.jpg"},
+        "0": {"label": "🔄 Restart",              "action": "menu:main"}
+      }
+    },
+    "shop": {
+      "text": "What are you looking for?",
+      "options": {
+        "1": {"label": "👕 Clothing",      "action": "flow:buy_item"},
+        "2": {"label": "👟 Accessories",   "action": "flow:buy_item"},
+        "3": {"label": "💼 Custom order",  "action": "flow:custom_order"},
+        "0": {"label": "⬅️ Back",          "action": "menu:main"}
+      }
+    }
+  },
+
+  "flows": {
+    "booking": {
+      "steps": [
+        {"key": "name",    "prompt": "What's your full name?"},
+        {"key": "date",    "prompt": "What date and time suits you? (e.g. Monday 10am)"},
+        {"key": "service", "prompt": "What service do you need?"}
+      ],
+      "on_complete": {
+        "reply": "✅ Booking confirmed!\n\n*Name:* {name}\n*Date:* {date}\n*Service:* {service}\n\nWe'll send you a reminder soon!",
+        "log_to_sheets": true,
+        "send_email": true
+      }
+    },
+    "buy_item": {
+      "steps": [
+        {"key": "name",   "prompt": "What's your name?"},
+        {"key": "item",   "prompt": "Which item do you want?"},
+        {"key": "size",   "prompt": "What size? (XS / S / M / L / XL / XXL)"},
+        {"key": "colour", "prompt": "What colour do you prefer?"},
+        {"key": "address","prompt": "What's your delivery address?"}
+      ],
+      "on_complete": {
+        "reply": "🛒 Order received!\n\n*Name:* {name}\n*Item:* {item}\n*Size:* {size}\n*Colour:* {colour}\n*Address:* {address}\n\nWe'll process your order shortly!",
+        "log_to_sheets": true,
+        "send_email": true
+      }
+    },
+    "custom_order": {
+      "steps": [
+        {"key": "name",        "prompt": "What's your name?"},
+        {"key": "description", "prompt": "Describe your custom order in detail:"},
+        {"key": "budget",      "prompt": "What's your budget?"},
+        {"key": "phone",       "prompt": "Best phone number to reach you?"}
+      ],
+      "on_complete": {
+        "reply": "📝 Custom order request received!\n\n*Name:* {name}\n*Details:* {description}\n*Budget:* {budget}\n\nWe'll call you at {phone} within 24 hours.",
+        "log_to_sheets": true,
+        "send_email": true
+      }
+    }
+  },
+
+  "replies": {
+    "contact_info": "📞 *Call us:* +234-xxx-xxxx\n📧 *Email:* info@mybusiness.com\n🌐 *Website:* www.mybusiness.com\n\n⏰ Mon–Fri, 9am–6pm"
+  },
+
+  "keywords": {
+    "price":     "💰 Our prices start from ₦5,000. Type *hi* to browse or place an order.",
+    "hours":     "⏰ We're open Mon–Fri, 9am–6pm and Sat 10am–4pm.",
+    "location":  "📍 We're located at 12 Main Street, Lagos. Click here for directions: maps.google.com",
+    "delivery":  "🚚 We deliver across Nigeria. Delivery takes 2–5 business days.",
+    "return":    "↩️ We accept returns within 7 days of delivery. Contact us to start a return.",
+    "payment":   "💳 We accept bank transfer, card payment, and cash on delivery."
+  },
+
+  "ai_fallback": {
+    "enabled": false,
+    "api_key": "",
+    "system_prompt": "You are a helpful customer service assistant for My Business Bot. Answer customer questions helpfully and concisely. If you don't know something specific about the business, direct them to type 'hi' to see the main menu."
+  },
+
+  "scheduled_messages": [],
+
+  "known_contacts": []
+}
